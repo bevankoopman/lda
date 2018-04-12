@@ -257,19 +257,19 @@ class LDA:
         return self
 
     def _initialize(self, X):
-        D, W = X.shape
-        N = int(X.sum())
-        n_topics = self.n_topics
-        n_iter = self.n_iter
+        D, W = X.shape # D=number of documents; W=number of words
+        N = int(X.sum()) # number of terms in the corpus
+        n_topics = self.n_topics # number of topics passed in as param
+        n_iter = self.n_iter # number of iterations for the Gibbs sampling
         logger.info("n_documents: {}".format(D))
         logger.info("vocab_size: {}".format(W))
         logger.info("n_words: {}".format(N))
         logger.info("n_topics: {}".format(n_topics))
         logger.info("n_iter: {}".format(n_iter))
 
-        self.nzw_ = nzw_ = np.zeros((n_topics, W), dtype=np.intc)
-        self.ndz_ = ndz_ = np.zeros((D, n_topics), dtype=np.intc)
-        self.nz_ = nz_ = np.zeros(n_topics, dtype=np.intc)
+        self.nzw_ = nzw_ = np.zeros((n_topics, W), dtype=np.intc) # number of words assigned to each topic
+        self.ndz_ = ndz_ = np.zeros((D, n_topics), dtype=np.intc) # number of documents assigned to each topic
+        self.nz_ = nz_ = np.zeros(n_topics, dtype=np.intc) # number of times each topics is assinged
 
         self.WS, self.DS = WS, DS = lda.utils.matrix_to_lists(X)
         self.ZS = ZS = np.empty_like(self.WS, dtype=np.intc)
